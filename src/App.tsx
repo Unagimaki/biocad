@@ -11,7 +11,7 @@ type FormData = {
 };
 
 export default function App() {
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: { input1: '', input2: '' },
   });
 
@@ -28,6 +28,11 @@ export default function App() {
       return;
     }
     setConfirmedInputs({ first: data.input1, second: data.input2 });
+  };
+
+  const handleClear = () => {
+    reset({ input1: '', input2: '' });  // очистить инпуты
+    setConfirmedInputs({ first: '', second: '' }); // очистить подтверждённые значения
   };
 
   const handleCloseError = () => {
@@ -100,6 +105,9 @@ export default function App() {
 
         <Button type="submit" variant="contained" color="primary" size="large" sx={{ mt: 1 }}>
           Отобразить
+        </Button>
+        <Button type="button" onClick={handleClear} style={{ marginLeft: 10 }}>
+          Очистить
         </Button>
       </Box>
 

@@ -2,6 +2,7 @@
   "name": "biocad",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Unagimaki.github.io/biocad",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
@@ -26,8 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  },
+    "deploy": "gh-pages -d build -r https://github.com/Unagimaki/biocad.git"
+    },
   "eslintConfig": {
     "extends": [
       "react-app",

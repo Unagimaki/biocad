@@ -1,0 +1,25 @@
+.container {
+    width: 4vw;
+    height: 4vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1vw;
+    font-size: 2vw;
+    margin: 1vw;
+}
+
+
+@media (max-width: 799px) {
+    .container {
+        width: 7vw;
+        height: 7vw;
+    }
+}
+@media (max-width: 499px) {
+    .container {
+        width: 12vw;
+        height: 12vw;
+        font-size: 4vw;
+    }
+}

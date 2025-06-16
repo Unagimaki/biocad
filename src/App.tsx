@@ -112,9 +112,7 @@ export default function App() {
       </Box>
 
       {confirmedInputs && (
-        <div style={{ maxWidth: 600, margin: '20px auto' }}>
-          <OrderContainer str1={confirmedInputs.first} str2={confirmedInputs.second} />
-        </div>
+        <OrderContainer str1={confirmedInputs.first} str2={confirmedInputs.second} />
       )}
 
       {/* Модалка ошибки */}

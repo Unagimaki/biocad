@@ -1,63 +1,55 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useFromStrokeToArray } from '../../hooks/useFromStrokeToArryy';
-import { StrokeContainerRender } from '../StrokeContainerRender/StrokeContainerRender';
-import { getMaxDivisor } from '../../helpers/getMaxDivisor';
-import styles from './OrderContainer.module.scss';
+import React, { useEffect, useRef, useState } from 'react'
+import { useFromStrokeToArray } from '../../hooks/useFromStrokeToArryy'
+import { StrokeContainerRender } from '../StrokeContainerRender/StrokeContainerRender'
+import { getMaxDivisor } from '../../helpers/getMaxDivisor'
+import styles from './OrderContainer.module.scss'
 
-type Props = { str1: string; str2: string };
+type Props = { str1: string; str2: string }
 
 export const OrderContainer = React.memo(({ str1, str2 }: Props) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState(0);
-  const [chunkSize, setChunkSize] = useState(0);
-
-  const { coloredArr1, coloredArr2, matrix } = useFromStrokeToArray(str1, str2, chunkSize);
+  const [chunkSize, setChunkSize] = useState(0)
+  const { coloredArr1, coloredArr2, matrix } = useFromStrokeToArray(str1, str2, chunkSize)
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const updateChunkSize = () => {
+      const windowWidth = window.innerWidth
+      const len = coloredArr1.length
+      if (!len) return
 
-    // Функция для обновления ширины контейнера
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
+      // Проверяем ширину контейнера
+      const containerWidth = containerRef.current?.offsetWidth || 0
+
+      let maxParts = 0
+
+      if (windowWidth < 400) {
+        maxParts = 2
+      } else if (windowWidth < 600) {
+        maxParts = 4
+      } else if (windowWidth < 800) {
+        maxParts = len / 2
+      } else {
+        maxParts = len
       }
-    };
 
-    updateWidth();
+      // Если контейнер шире окна, уменьшаем maxParts для переноса
+      if (containerWidth > windowWidth) {
+        maxParts = Math.min(maxParts, Math.floor(len / 2))
+      }
 
-    // Создаем ResizeObserver, чтобы слушать изменения размеров контейнера
-    const resizeObserver = new ResizeObserver(() => {
-      updateWidth();
-    });
-
-    resizeObserver.observe(containerRef.current);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    const len = coloredArr1.length;
-    if (!len) return;
-
-    const maxParts =
-      containerWidth < 400 ? 2 :
-      containerWidth < 600 ? 4 :
-      containerWidth < 800 ? len / 2 :
-      null;
-
-    if (maxParts) {
-      setChunkSize(getMaxDivisor(len, Math.floor(maxParts)));
-    } else {
-      setChunkSize(len);
+      setChunkSize(getMaxDivisor(len, Math.floor(maxParts)))
     }
-  }, [containerWidth, coloredArr1.length]);
+
+    updateChunkSize()
+
+    window.addEventListener('resize', updateChunkSize)
+    return () => window.removeEventListener('resize', updateChunkSize)
+  }, [coloredArr1.length])
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div className={styles.container}>
       {!chunkSize && (
-        <div>
+        <div  ref={containerRef}>
           <StrokeContainerRender arr={coloredArr1} />
           <StrokeContainerRender arr={coloredArr2} />
         </div>
@@ -71,5 +63,5 @@ export const OrderContainer = React.memo(({ str1, str2 }: Props) => {
         </div>
       )}
     </div>
-  );
-});
+  )
+})

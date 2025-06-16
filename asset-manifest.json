@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/biocad/static/css/main.adf534c6.css",
-    "main.js": "/biocad/static/js/main.759ea294.js",
+    "main.css": "/biocad/static/css/main.c98fa2cf.css",
+    "main.js": "/biocad/static/js/main.0d29d49b.js",
     "index.html": "/biocad/index.html",
-    "main.adf534c6.css.map": "/biocad/static/css/main.adf534c6.css.map",
-    "main.759ea294.js.map": "/biocad/static/js/main.759ea294.js.map"
+    "main.c98fa2cf.css.map": "/biocad/static/css/main.c98fa2cf.css.map",
+    "main.0d29d49b.js.map": "/biocad/static/js/main.0d29d49b.js.map"
   },
   "entrypoints": [
-    "static/css/main.adf534c6.css",
-    "static/js/main.759ea294.js"
+    "static/css/main.c98fa2cf.css",
+    "static/js/main.0d29d49b.js"
   ]
 }
